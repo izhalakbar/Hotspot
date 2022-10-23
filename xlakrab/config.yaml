@@ -234,25 +234,30 @@ proxy-groups:
 # ================= REYRE-STB ==================
 rule-providers:
   Direct:
-    type: file
+    type: http
     behavior: classical
-    path: "./rule_provider/direct.yaml"
+    path: "./rule_provider/xl/direct.yaml"
+    url: https://raw.githubusercontent.com/izhalakbar/HotspotRules/main/xlakrab/direct.yaml
   Reject:
-    type: file
+    type: http
     behavior: classical
-    path: "./rule_provider/reject.yaml"
+    path: "./rule_provider/xl/reject.yaml"
+    url: https://raw.githubusercontent.com/izhalakbar/HotspotRules/main/xlakrab/reject.yaml
   Gaming:
-    type: file
+    type: http
     behavior: classical
-    path: "./rule_provider/gaming.yaml"
+    path: "./rule_provider/xl/game.yaml"
+    url: https://raw.githubusercontent.com/izhalakbar/HotspotRules/main/xlakrab/game.yaml
   Sosmed:
-    type: file
+    type: http
     behavior: classical
-    path: "./rule_provider/sosmed.yaml"
+    path: "./rule_provider/xl/sosmed.yaml"
+    url: https://raw.githubusercontent.com/izhalakbar/HotspotRules/main/xlakrab/sosmed.yaml
   Streaming:
-    type: file
+    type: http
     behavior: classical
-    path: "./rule_provider/streaming.yaml"
+    path: "./rule_provider/xl/stream.yaml"
+    url: https://raw.githubusercontent.com/izhalakbar/HotspotRules/main/xlakrab/stream.yaml
 rules:
   - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
   - IP-CIDR6,::1/128,REJECT,no-resolve
