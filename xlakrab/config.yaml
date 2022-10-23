@@ -44,51 +44,47 @@ profile:
 # ================= REYRE-STB ==================
 
 BUG:
-  - &bug1 104.17.3.81
-  - &bug2 104.18.11.39
+  - &bug 104.17.3.81
 SNI:
-  - &sni1 api.midtrans.com
-  - &sni2 akrab.sprt.my.id
+  - &sni api.midtrans.com
 PATH:
-  - &path1 wss://api.midtrans.com/fastssh/vmess1/6354bf9110cb9/
+  - &path1 wss://api.midtrans.com/howdy
   - &path2 wss://api.midtrans.com/howdy
   - &path3 wss://api.midtrans.com/fastssh/xlakrabvless/63544963745b4/
   - &path4 wss://api.midtrans.com/fastssh
   - &path5 wss://api.midtrans.com/websocket
   - &path6 wss://api.midtrans.com/fastssh/sdja/6354c266757c1/
-  - &path7 wss://akrab.sprt.my.id/howdy
 PW:
-  - &pw1 bb4b9e95-c9ff-411c-9a47-483570e169aa
+  - &pw1 11346980-52a6-11ed-b09b-1239d0255272
   - &pw2 91f69300-5223-11ed-872a-1239d0255272
   - &pw3 81f1f510-3ca7-4734-8956-0f4fce670af5
   - &pw4 14976150-528a-11ed-b830-225401db9d57
   - &pw5 0b26b9fb-34a7-4a53-86c4-a8ff3b1ae7ae
   - &pw6 b80925d6-40fa-4161-9e32-3550965527fd
-  - &pw7 11346980-52a6-11ed-b09b-1239d0255272
 # ================= REYRE-STB ==================
 proxies:
 #1
   - name: Proxie-trojann
-    server: *bug2
+    server: *bug
     port: 443
     type: trojan
-    password: *pw7
+    password: *pw1
     skip-cert-verify: true
-    sni: *sni2
+    sni: *sni
     network: ws
     ws-opts:
-      path: *path7
+      path: *path1
       headers:
-        Host: sg3-trojan.bonds.id
+        Host: sg1-trojan.bonds.id
     udp: true
 #2
   - name: Proxie-trojan1
-    server: *bug1
+    server: *bug
     port: 443
     type: trojan
     password: *pw2
     skip-cert-verify: true
-    sni: *sni1
+    sni: *sni
     network: ws
     ws-opts:
       path: *path2
@@ -97,14 +93,14 @@ proxies:
     udp: true
 #3
   - name: Proxie-vless1
-    server: *bug1
+    server: *bug
     port: 443
     type: vless
     uuid: *pw3
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni1
+    servername: *sni
     network: ws
     ws-opts:
       path: *path3
@@ -113,12 +109,12 @@ proxies:
     udp: true
 #4
   - name: Proxie-trojan-unli
-    server: *bug1
+    server: *bug
     port: 443
     type: trojan
     password: *pw4
     skip-cert-verify: true
-    sni: *sni1
+    sni: *sni
     network: ws
     ws-opts:
       path: *path4
@@ -127,14 +123,14 @@ proxies:
     udp: true
 #5
   - name: Proxie-vless2
-    server: *bug1
+    server: *bug
     port: 443
     type: vless
     uuid: *pw5
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni1
+    servername: *sni
     network: ws
     ws-opts:
       path: *path5
@@ -143,7 +139,7 @@ proxies:
     udp: true
 #6
   - name: Proxie-vmess2
-    server: *bug1
+    server: *bug
     port: 443
     type: vmess
     uuid: *pw6
@@ -151,7 +147,7 @@ proxies:
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni1
+    servername: *sni
     network: ws
     ws-opts:
       path: *path6
