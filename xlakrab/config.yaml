@@ -1,1 +1,247 @@
-sss
+---
+dns:
+  nameserver:
+  - dhcp://"eth0.3"
+  - 192.168.8.1
+  - 8.8.8.8
+  - 8.8.4.4
+  - https://dns.adguard.com/dns-query
+  - https://dns.google/dns-query
+  - tls://dns.adguard.com
+  - tls://dns.google
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  fake-ip-filter:
+  - "+.*"
+  default-nameserver:
+  - 192.168.9.1
+  - 192.168.8.1
+  - 8.8.8.8
+  - 8.8.4.4
+redir-port: 7892
+tproxy-port: 7895
+port: 7890
+socks-port: 7891
+mixed-port: 7893
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: reyre
+bind-address: "*"
+external-ui: "/usr/share/openclash/ui"
+ipv6: false
+tun:
+  enable: true
+  stack: system
+  device: utun
+  auto-route: false
+  auto-detect-interface: false
+  dns-hijack:
+  - tcp://any:53
+profile:
+  store-selected: true
+  store-fake-ip: true
+BUG:
+- 104.17.3.81
+SNI:
+- api.midtrans.com
+PATH:
+- wss://api.midtrans.com/fastssh/xlakrab1/6354468d3c568/
+- wss://api.midtrans.com/howdy
+- wss://api.midtrans.com/fastssh/xlakrabvless/63544963745b4/
+- wss://api.midtrans.com/fastssh
+PW:
+- a9481600-ef36-402a-a0e5-5547bfd7b87c
+- 91f69300-5223-11ed-872a-1239d0255272
+- 81f1f510-3ca7-4734-8956-0f4fce670af5
+- 285a19b0-527b-11ed-b536-225401db9d57
+proxies:
+- name: Proxie-vmess1
+  server: 104.17.3.81
+  port: 443
+  type: vmess
+  uuid: a9481600-ef36-402a-a0e5-5547bfd7b87c
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  servername: api.midtrans.com
+  network: ws
+  ws-opts:
+    path: wss://api.midtrans.com/fastssh/xlakrab1/6354468d3c568/
+    headers:
+      Host: sg-ovh2.v2-ray.com
+  udp: true
+- name: Proxie-trojan
+  server: 104.17.3.81
+  port: 443
+  type: trojan
+  password: 91f69300-5223-11ed-872a-1239d0255272
+  skip-cert-verify: true
+  sni: api.midtrans.com
+  network: ws
+  ws-opts:
+    path: wss://api.midtrans.com/howdy
+    headers:
+      Host: sg3-trojan.bonds.id
+  udp: true
+- name: Proxie-vless
+  server: 104.17.3.81
+  port: 443
+  type: vless
+  uuid: 81f1f510-3ca7-4734-8956-0f4fce670af5
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  servername: api.midtrans.com
+  network: ws
+  ws-opts:
+    path: wss://api.midtrans.com/fastssh/xlakrabvless/63544963745b4/
+    headers:
+      Host: sg2.vless.co
+  udp: true
+- name: Proxie-vmess2
+  server: 104.17.3.81
+  port: 443
+  type: trojan
+  password: a9481600-ef36-402a-a0e5-5547bfd7b87c
+  skip-cert-verify: true
+  sni: api.midtrans.com
+  network: ws
+  ws-opts:
+    path: wss://api.midtrans.com/fastssh/xlakrab1/6354468d3c568/
+    headers:
+      Host: sg-ovh2.v2-ray.com
+  udp: true
+- name: Proxie-trojan-unli
+  server: 104.17.3.81
+  port: 443
+  type: trojan
+  password: 285a19b0-527b-11ed-b536-225401db9d57
+  skip-cert-verify: true
+  sni: api.midtrans.com
+  network: ws
+  ws-opts:
+    path: wss://api.midtrans.com/fastssh
+    headers:
+      Host: sg-ovh.tjvpn.org
+  udp: true
+proxy-groups:
+- name: "\U0001F310 Universal"
+  type: load-balance
+  strategy: consistent-hashing
+  url: http://cp.cloudflare.com/generate_204
+  interval: 300
+  proxies:
+  - Proxie-vmess1
+  - Proxie-trojan
+  - Proxie-vless
+  - Proxie-vmess2
+  - Proxie-trojan-unli
+- name: "\U0001F536 LB-Streaming"
+  type: load-balance
+  strategy: round-robin
+  url: http://cp.cloudflare.com/generate_204
+  interval: 150
+  proxies:
+  - "\U0001F538Streaming-1"
+  - "\U0001F538Streaming-2"
+- name: "\U0001F538Streaming-1"
+  type: url-test
+  url: http://cp.cloudflare.com/generate_204
+  interval: 100
+  tolerance: 50
+  disable-udp: false
+  proxies:
+  - Proxie-vmess1
+  - Proxie-trojan
+  - Proxie-vless
+- name: "\U0001F538Streaming-2"
+  type: url-test
+  url: http://cp.cloudflare.com/generate_204
+  interval: 100
+  tolerance: 50
+  disable-udp: false
+  proxies:
+  - Proxie-vless
+  - Proxie-vmess2
+  - Proxie-trojan-unli
+- name: "\U0001F537 LB-Sosmed"
+  type: load-balance
+  strategy: round-robin
+  url: http://cp.cloudflare.com/generate_204
+  interval: 100
+  proxies:
+  - "\U0001F538Sosmed-1"
+  - "\U0001F538Sosmed-2"
+- name: "\U0001F538Sosmed-1"
+  type: url-test
+  url: http://cp.cloudflare.com/generate_204
+  interval: 100
+  tolerance: 50
+  disable-udp: false
+  proxies:
+  - Proxie-vmess1
+  - Proxie-trojan
+  - Proxie-vless
+- name: "\U0001F538Sosmed-2"
+  type: url-test
+  url: http://cp.cloudflare.com/generate_204
+  interval: 100
+  tolerance: 50
+  disable-udp: false
+  proxies:
+  - Proxie-vless
+  - Proxie-vmess2
+  - Proxie-trojan-unli
+- name: "\U0001F3AE Game"
+  type: select
+  proxies:
+  - Proxie-trojan-unli
+rule-providers:
+  Direct:
+    type: file
+    behavior: classical
+    path: "./rule_provider/direct.yaml"
+  Reject:
+    type: file
+    behavior: classical
+    path: "./rule_provider/reject.yaml"
+  Gaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/gaming.yaml"
+  Sosmed:
+    type: file
+    behavior: classical
+    path: "./rule_provider/sosmed.yaml"
+  Streaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/streaming.yaml"
+rules:
+- DST-PORT,7895,REJECT
+- DST-PORT,7892,REJECT
+- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+- IP-CIDR6,::1/128,REJECT,no-resolve
+- RULE-SET,Direct,DIRECT
+- RULE-SET,Reject,REJECT
+- "RULE-SET,Gaming,\U0001F3AE Game"
+- "RULE-SET,Sosmed,\U0001F537 LB-Sosmed"
+- "RULE-SET,Streaming,\U0001F536 LB-Streaming"
+- "MATCH,\U0001F310 Universal"
+geodata-mode: false
+geodata-loader: memconservative
+tcp-concurrent: true
+sniffer:
+  enable: true
+  sniffing:
+  - tls
+  - http
+  ForceDnsMapping: true
+  ParsePureIp: true
+authentication:
+- Clash:LGCjdpQ6
