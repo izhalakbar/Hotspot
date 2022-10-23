@@ -44,9 +44,11 @@ profile:
 # ================= REYRE-STB ==================
 
 BUG:
-  - &bug 104.17.3.81
+  - &bug1 104.17.3.81
+  - &bug2 104.18.11.39
 SNI:
-  - &sni api.midtrans.com
+  - &sni1 api.midtrans.com
+  - &sni2 akrab.sprt.my.id
 PATH:
   - &path1 wss://api.midtrans.com/fastssh/vmess1/6354bf9110cb9/
   - &path2 wss://api.midtrans.com/howdy
@@ -54,6 +56,7 @@ PATH:
   - &path4 wss://api.midtrans.com/fastssh
   - &path5 wss://api.midtrans.com/websocket
   - &path6 wss://api.midtrans.com/fastssh/sdja/6354c266757c1/
+  - &path7 wss://akrab.sprt.my.id/howdy
 PW:
   - &pw1 bb4b9e95-c9ff-411c-9a47-483570e169aa
   - &pw2 91f69300-5223-11ed-872a-1239d0255272
@@ -61,33 +64,31 @@ PW:
   - &pw4 14976150-528a-11ed-b830-225401db9d57
   - &pw5 0b26b9fb-34a7-4a53-86c4-a8ff3b1ae7ae
   - &pw6 b80925d6-40fa-4161-9e32-3550965527fd
+  - &pw7 11346980-52a6-11ed-b09b-1239d0255272
 # ================= REYRE-STB ==================
 proxies:
 #1
-  - name: Proxie-vmess1
-    server: *bug
+  - name: Proxie-trojann
+    server: *bug2
     port: 443
-    type: vmess
-    uuid: *pw1
-    alterId: 0
-    cipher: auto
-    tls: true
+    type: trojan
+    password: *pw7
     skip-cert-verify: true
-    servername: *sni
+    sni: *sni2
     network: ws
     ws-opts:
-      path: *path1
+      path: *path7
       headers:
-        Host: sg2.v2-ray.com
+        Host: sg3-trojan.bonds.id
     udp: true
 #2
   - name: Proxie-trojan1
-    server: *bug
+    server: *bug1
     port: 443
     type: trojan
     password: *pw2
     skip-cert-verify: true
-    sni: *sni
+    sni: *sni1
     network: ws
     ws-opts:
       path: *path2
@@ -96,14 +97,14 @@ proxies:
     udp: true
 #3
   - name: Proxie-vless1
-    server: *bug
+    server: *bug1
     port: 443
     type: vless
     uuid: *pw3
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni
+    servername: *sni1
     network: ws
     ws-opts:
       path: *path3
@@ -112,12 +113,12 @@ proxies:
     udp: true
 #4
   - name: Proxie-trojan-unli
-    server: *bug
+    server: *bug1
     port: 443
     type: trojan
     password: *pw4
     skip-cert-verify: true
-    sni: *sni
+    sni: *sni1
     network: ws
     ws-opts:
       path: *path4
@@ -126,14 +127,14 @@ proxies:
     udp: true
 #5
   - name: Proxie-vless2
-    server: *bug
+    server: *bug1
     port: 443
     type: vless
     uuid: *pw5
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni
+    servername: *sni1
     network: ws
     ws-opts:
       path: *path5
@@ -142,7 +143,7 @@ proxies:
     udp: true
 #6
   - name: Proxie-vmess2
-    server: *bug
+    server: *bug1
     port: 443
     type: vmess
     uuid: *pw6
@@ -150,7 +151,7 @@ proxies:
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni
+    servername: *sni1
     network: ws
     ws-opts:
       path: *path6
@@ -165,7 +166,7 @@ proxy-groups:
     url: http://cp.cloudflare.com/generate_204
     interval: 300
     proxies:
-      - Proxie-vmess1
+      - Proxie-trojann
       - Proxie-trojan1
       - Proxie-vless1
       - Proxie-trojan-unli
@@ -186,7 +187,7 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-vmess1
+      - Proxie-trojann
       - Proxie-trojan1
       - Proxie-vless1
   - name: 🔸Streaming-2
@@ -214,7 +215,7 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-vmess1
+      - Proxie-trojann
       - Proxie-trojan1
       - Proxie-vless1
   - name: 🔸Sosmed-2
