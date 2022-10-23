@@ -42,117 +42,151 @@ profile:
   store-selected: true
   store-fake-ip: true
 # ================= REYRE-STB ==================
-
 BUG:
-  - &bug 104.17.3.81
+  - &bug1 104.18.2.2
+  - &bug2 104.17.3.81
 SNI:
-  - &sni api.midtrans.com
+  - &sni1 roboguru.ruangguru.com
+  - &sni2 api.midtrans.com
 PATH:
-  - &path1 wss://api.midtrans.com/howdy
-  - &path2 wss://api.midtrans.com/howdy
-  - &path3 wss://api.midtrans.com/fastssh/xlakrabvless/63544963745b4/
-  - &path4 wss://api.midtrans.com/fastssh
-  - &path5 wss://api.midtrans.com/websocket
-  - &path6 wss://api.midtrans.com/fastssh/sdja/6354c266757c1/
+  - &path1 wss://roboguru.ruangguru.com/trojan
+  - &path2 wss://api.midtrans.com/trojan
+  - &path3 wss://roboguru.ruangguru.com/websocket
+  - &path4 wss://api.midtrans.com/websocket
+  - &path5 wss://roboguru.ruangguru.com/howdy
+  - &path6 wss://api.midtrans.com/howdy
+  - &path7 wss://roboguru.ruangguru.com/websocket
+  - &path8 wss://api.midtrans.com/websocket
 PW:
-  - &pw1 11346980-52a6-11ed-b09b-1239d0255272
-  - &pw2 91f69300-5223-11ed-872a-1239d0255272
-  - &pw3 81f1f510-3ca7-4734-8956-0f4fce670af5
-  - &pw4 14976150-528a-11ed-b830-225401db9d57
-  - &pw5 0b26b9fb-34a7-4a53-86c4-a8ff3b1ae7ae
-  - &pw6 b80925d6-40fa-4161-9e32-3550965527fd
+  - &pw1 a5718237-1ad5-4e77-a66a-bfd0191040e0
+  - &pw2 9b5d01fa-cbc9-4234-88ad-6c8c183b5391
+  - &pw3 d6153e00-52ac-11ed-8d2f-1239d0255272
+  - &pw4 67475293-3b70-49fa-be45-4012bbfdcc41
+  - &pw5 511f045c-5075-43bb-95c9-fd73bf911ff5
+  - &pw6 7029ee70-52ad-11ed-a42f-1239d0255272
+  - &pw7 5053f26e-ee66-485d-b817-56f5f6d121eb
+  - &pw8 400d6afe-35cf-498c-89d7-1c6e4fe0260f
 # ================= REYRE-STB ==================
 proxies:
 #1
-  - name: Proxie-trojann
-    server: *bug
+  - name: Proxie-trojan1
+    server: *bug1
     port: 443
     type: trojan
     password: *pw1
     skip-cert-verify: true
-    sni: *sni
+    sni: *sni1
     network: ws
     ws-opts:
       path: *path1
       headers:
-        Host: sg1-trojan.bonds.id
+        Host: sg3trws.xrayjrt.me
     udp: true
 #2
-  - name: Proxie-trojan1
-    server: *bug
-    port: 443
-    type: trojan
-    password: *pw2
-    skip-cert-verify: true
-    sni: *sni
-    network: ws
-    ws-opts:
-      path: *path2
-      headers:
-        Host: sg3-trojan.bonds.id
-    udp: true
-#3
   - name: Proxie-vless1
-    server: *bug
+    server: *bug1
     port: 443
     type: vless
-    uuid: *pw3
+    uuid: *pw2
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni
+    servername: *sni1
     network: ws
     ws-opts:
       path: *path3
       headers:
-        Host: sg2.vless.co
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+#3
+  - name: Proxie-trojan2
+    server: *bug1
+    port: 443
+    type: trojan
+    password: *pw3
+    skip-cert-verify: true
+    sni: *sni1
+    network: ws
+    ws-opts:
+      path: *path5
+      headers:
+        Host: sg-atha.bonds.id
     udp: true
 #4
-  - name: Proxie-trojan-unli
-    server: *bug
+  - name: Proxie-trojan3
+    server: *bug2
     port: 443
     type: trojan
     password: *pw4
     skip-cert-verify: true
-    sni: *sni
+    sni: *sni2
     network: ws
     ws-opts:
-      path: *path4
+      path: *path2
       headers:
-        Host: sghe.tjvpn.org
+        Host: sg3trws.xrayjrt.me
     udp: true
 #5
   - name: Proxie-vless2
-    server: *bug
+    server: *bug2
     port: 443
     type: vless
     uuid: *pw5
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni
+    servername: *sni2
     network: ws
     ws-opts:
-      path: *path5
+      path: *path4
       headers:
         Host: sgovh1-ws.xvless.xyz
     udp: true
 #6
-  - name: Proxie-vmess2
-    server: *bug
+  - name: Proxie-trojan4
+    server: *bug2
     port: 443
-    type: vmess
-    uuid: *pw6
-    alterId: 0
-    cipher: auto
-    tls: true
+    type: trojan
+    password: *pw6
     skip-cert-verify: true
-    servername: *sni
+    sni: *sni2
     network: ws
     ws-opts:
       path: *path6
       headers:
-        Host: sg1.v2-ray.com
+        Host: sg-atha.bonds.id
+    udp: true
+#7
+  - name: Proxie-vless3
+    server: *bug1
+    port: 443
+    type: vless
+    uuid: *pw7
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni1
+    network: ws
+    ws-opts:
+      path: *path7
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+#8
+  - name: Proxie-vless4
+    server: *bug2
+    port: 443
+    type: vless
+    uuid: *pw8
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni2
+    network: ws
+    ws-opts:
+      path: *path8
+      headers:
+        Host: sgovh1-ws.xvless.xyz
     udp: true
 # ================= REYRE-STB ==================
 proxy-groups:
@@ -162,12 +196,14 @@ proxy-groups:
     url: http://cp.cloudflare.com/generate_204
     interval: 300
     proxies:
-      - Proxie-trojann
       - Proxie-trojan1
       - Proxie-vless1
-      - Proxie-trojan-unli
+      - Proxie-trojan2
+      - Proxie-trojan3
       - Proxie-vless2
-      - Proxie-vmess2
+      - Proxie-trojan4
+      - Proxie-vless3
+      - Proxie-vless4
   - name: 🔶 LB-Streaming
     type: load-balance
     strategy: round-robin
@@ -183,9 +219,10 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-trojann
       - Proxie-trojan1
       - Proxie-vless1
+      - Proxie-trojan2
+      - Proxie-vless3
   - name: 🔸Streaming-2
     type: url-test
     url: http://cp.cloudflare.com/generate_204
@@ -193,9 +230,10 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-trojan-unli
+      - Proxie-trojan3
       - Proxie-vless2
-      - Proxie-vmess2
+      - Proxie-trojan4
+      - Proxie-vless4
   - name: 🔷 LB-Sosmed
     type: load-balance
     strategy: round-robin
@@ -211,9 +249,10 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-trojann
       - Proxie-trojan1
       - Proxie-vless1
+      - Proxie-trojan2
+      - Proxie-vless3
   - name: 🔸Sosmed-2
     type: url-test
     url: http://cp.cloudflare.com/generate_204
@@ -221,13 +260,20 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-trojan-unli
+      - Proxie-trojan3
       - Proxie-vless2
-      - Proxie-vmess2
+      - Proxie-trojan4
+      - Proxie-vless4
   - name: 🎮 Game
-    type: select
+    type: load-balance
+    strategy: round-robin
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
     proxies:
-      - Proxie-trojan-unli
+      - Proxie-vless1
+      - Proxie-trojan1
+      - Proxie-vless3
+      - Proxie-trojan3
 # ================= REYRE-STB ==================
 rule-providers:
   Direct:
