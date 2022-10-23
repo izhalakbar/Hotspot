@@ -1,0 +1,264 @@
+---
+dns:
+  nameserver:
+  - 192.168.8.1
+  - 192.168.9.1
+  - dhcp://"eth1"
+  - dhcp://"wwan0"
+  - https://dns.adguard.com/dns-query
+  - https://dns-google.com/dns-query
+  - tls://dns.adguard.com
+  - tls://dns-google.com/
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  fake-ip-range: 198.18.0.1/16
+  listen: 127.0.0.1:7874
+  fake-ip-filter:
+  - "+.*"
+  default-nameserver:
+  - 192.168.9.1
+  - 192.168.8.1
+redir-port: 7892
+tproxy-port: 7895
+port: 7890
+socks-port: 7891
+mixed-port: 7893
+mode: rule
+log-level: info
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: reyre
+bind-address: "*"
+external-ui: "/usr/share/openclash/ui"
+ipv6: false
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+  - tcp://8.8.8.8:53
+  - tcp://8.8.4.4:53
+profile:
+  store-selected: true
+  store-fake-ip: true
+# ================= REYRE-STB ==================
+
+BUG:
+  - &bug 104.17.3.81
+SNI:
+  - &sni api.midtrans.com
+PATH:
+  - &path1 wss://api.midtrans.com/fastssh/vmess1/6354bf9110cb9/
+  - &path2 wss://api.midtrans.com/howdy
+  - &path3 wss://api.midtrans.com/fastssh/xlakrabvless/63544963745b4/
+  - &path4 wss://api.midtrans.com/fastssh
+  - &path5 wss://api.midtrans.com/websocket
+  - &path6 wss://api.midtrans.com/fastssh/sdja/6354c266757c1/
+PW:
+  - &pw1 bb4b9e95-c9ff-411c-9a47-483570e169aa
+  - &pw2 91f69300-5223-11ed-872a-1239d0255272
+  - &pw3 81f1f510-3ca7-4734-8956-0f4fce670af5
+  - &pw4 14976150-528a-11ed-b830-225401db9d57
+  - &pw5 0b26b9fb-34a7-4a53-86c4-a8ff3b1ae7ae
+  - &pw6 b80925d6-40fa-4161-9e32-3550965527fd
+# ================= REYRE-STB ==================
+proxies:
+#1
+  - name: Proxie-vmess1
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *pw1
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path1
+      headers:
+        Host: sg2.v2-ray.com
+    udp: true
+#2
+  - name: Proxie-trojan1
+    server: *bug
+    port: 443
+    type: trojan
+    password: *pw2
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path2
+      headers:
+        Host: sg3-trojan.bonds.id
+    udp: true
+#3
+  - name: Proxie-vless1
+    server: *bug
+    port: 443
+    type: vless
+    uuid: *pw3
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path3
+      headers:
+        Host: sg2.vless.co
+    udp: true
+#4
+  - name: Proxie-trojan-unli
+    server: *bug
+    port: 443
+    type: trojan
+    password: *pw4
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path4
+      headers:
+        Host: sghe.tjvpn.org
+    udp: true
+#5
+  - name: Proxie-vless2
+    server: *bug
+    port: 443
+    type: vless
+    uuid: *pw5
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path5
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+#6
+  - name: Proxie-vmess2
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *pw6
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path6
+      headers:
+        Host: sg1.v2-ray.com
+    udp: true
+# ================= REYRE-STB ==================
+proxy-groups:
+  - name: 🌐 Universal
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 300
+    proxies:
+      - Proxie-vmess1
+      - Proxie-trojan1
+      - Proxie-vless1
+      - Proxie-trojan-unli
+      - Proxie-vless2
+      - Proxie-vmess2
+  - name: 🔶 LB-Streaming
+    type: load-balance
+    strategy: round-robin
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - 🔸Streaming-1
+      - 🔸Streaming-2
+  - name: 🔸Streaming-1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 100
+    tolerance: 50
+    disable-udp: false
+    proxies:
+      - Proxie-vmess1
+      - Proxie-trojan1
+      - Proxie-vless1
+  - name: 🔸Streaming-2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 100
+    tolerance: 50
+    disable-udp: false
+    proxies:
+      - Proxie-trojan-unli
+      - Proxie-vless2
+      - Proxie-vmess2
+  - name: 🔷 LB-Sosmed
+    type: load-balance
+    strategy: round-robin
+    url: http://cp.cloudflare.com/generate_204
+    interval: 100
+    proxies:
+      - 🔸Sosmed-1
+      - 🔸Sosmed-2
+  - name: 🔸Sosmed-1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 100
+    tolerance: 50
+    disable-udp: false
+    proxies:
+      - Proxie-vmess1
+      - Proxie-trojan1
+      - Proxie-vless1
+  - name: 🔸Sosmed-2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 100
+    tolerance: 50
+    disable-udp: false
+    proxies:
+      - Proxie-trojan-unli
+      - Proxie-vless2
+      - Proxie-vmess2
+  - name: 🎮 Game
+    type: select
+    proxies:
+      - Proxie-trojan-unli
+# ================= REYRE-STB ==================
+rule-providers:
+  Direct:
+    type: file
+    behavior: classical
+    path: "./rule_provider/direct.yaml"
+  Reject:
+    type: file
+    behavior: classical
+    path: "./rule_provider/reject.yaml"
+  Gaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/gaming.yaml"
+  Sosmed:
+    type: file
+    behavior: classical
+    path: "./rule_provider/sosmed.yaml"
+  Streaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/streaming.yaml"
+rules:
+  - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+  - IP-CIDR6,::1/128,REJECT,no-resolve
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,Reject,REJECT
+  - RULE-SET,Gaming,🎮 Game
+  - RULE-SET,Sosmed,🔷 LB-Sosmed
+  - RULE-SET,Streaming,🔶 LB-Streaming
+  - MATCH,🌐 Universal
