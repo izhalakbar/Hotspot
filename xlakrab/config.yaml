@@ -48,18 +48,23 @@ BUG:
 SNI:
   - &sni api.midtrans.com
 PATH:
-  - &path1 wss://api.midtrans.com/fastssh/xlakrab1/6354468d3c568/
+  - &path1 wss://api.midtrans.com/fastssh/vmess1/6354bf9110cb9/
   - &path2 wss://api.midtrans.com/howdy
   - &path3 wss://api.midtrans.com/fastssh/xlakrabvless/63544963745b4/
   - &path4 wss://api.midtrans.com/fastssh
+  - &path5 wss://api.midtrans.com/websocket
+  - &path6 wss://api.midtrans.com/fastssh/sdja/6354c266757c1/
 PW:
 #198.74.11.40
-  - &pw1 a9481600-ef36-402a-a0e5-5547bfd7b87c
+  - &pw1 bb4b9e95-c9ff-411c-9a47-483570e169aa
   - &pw2 91f69300-5223-11ed-872a-1239d0255272
   - &pw3 81f1f510-3ca7-4734-8956-0f4fce670af5
-  - &pw4 285a19b0-527b-11ed-b536-225401db9d57
+  - &pw4 14976150-528a-11ed-b830-225401db9d57
+  - &pw5 0b26b9fb-34a7-4a53-86c4-a8ff3b1ae7ae
+  - &pw6 b80925d6-40fa-4161-9e32-3550965527fd
 # ================= REYRE-STB ==================
 proxies:
+#1
   - name: Proxie-vmess1
     server: *bug
     port: 443
@@ -74,9 +79,10 @@ proxies:
     ws-opts:
       path: *path1
       headers:
-        Host: sg-ovh2.v2-ray.com
+        Host: sg2.v2-ray.com
     udp: true
-  - name: Proxie-trojan
+#2
+  - name: Proxie-trojan1
     server: *bug
     port: 443
     type: trojan
@@ -89,7 +95,8 @@ proxies:
       headers:
         Host: sg3-trojan.bonds.id
     udp: true
-  - name: Proxie-vless
+#3
+  - name: Proxie-vless1
     server: *bug
     port: 443
     type: vless
@@ -104,19 +111,7 @@ proxies:
       headers:
         Host: sg2.vless.co
     udp: true
-  - name: Proxie-vmess2
-    server: *bug
-    port: 443
-    type: trojan
-    password: *pw1
-    skip-cert-verify: true
-    sni: *sni
-    network: ws
-    ws-opts:
-      path: *path1
-      headers:
-        Host: sg-ovh2.v2-ray.com
-    udp: true
+#4
   - name: Proxie-trojan-unli
     server: *bug
     port: 443
@@ -128,7 +123,40 @@ proxies:
     ws-opts:
       path: *path4
       headers:
-        Host: sg-ovh.tjvpn.org
+        Host: sghe.tjvpn.org
+    udp: true
+#5
+  - name: Proxie-vless2
+    server: *bug
+    port: 443
+    type: vless
+    uuid: *pw5
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path5
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+#6
+  - name: Proxie-vmess2
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *pw6
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path6
+      headers:
+        Host: sg1.v2-ray.com
     udp: true
 # ================= REYRE-STB ==================
 proxy-groups:
@@ -139,10 +167,11 @@ proxy-groups:
     interval: 300
     proxies:
       - Proxie-vmess1
-      - Proxie-trojan
-      - Proxie-vless
-      - Proxie-vmess2
+      - Proxie-trojan1
+      - Proxie-vless1
       - Proxie-trojan-unli
+      - Proxie-vless2
+      - Proxie-vmess2
   - name: 🔶 LB-Streaming
     type: load-balance
     strategy: round-robin
@@ -159,8 +188,8 @@ proxy-groups:
     disable-udp: false
     proxies:
       - Proxie-vmess1
-      - Proxie-trojan
-      - Proxie-vless
+      - Proxie-trojan1
+      - Proxie-vless1
   - name: 🔸Streaming-2
     type: url-test
     url: http://cp.cloudflare.com/generate_204
@@ -168,9 +197,9 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-vless
-      - Proxie-vmess2
       - Proxie-trojan-unli
+      - Proxie-vless2
+      - Proxie-vmess2
   - name: 🔷 LB-Sosmed
     type: load-balance
     strategy: round-robin
@@ -187,8 +216,8 @@ proxy-groups:
     disable-udp: false
     proxies:
       - Proxie-vmess1
-      - Proxie-trojan
-      - Proxie-vless
+      - Proxie-trojan1
+      - Proxie-vless1
   - name: 🔸Sosmed-2
     type: url-test
     url: http://cp.cloudflare.com/generate_204
@@ -196,9 +225,9 @@ proxy-groups:
     tolerance: 50
     disable-udp: false
     proxies:
-      - Proxie-vless
-      - Proxie-vmess2
       - Proxie-trojan-unli
+      - Proxie-vless2
+      - Proxie-vmess2
   - name: 🎮 Game
     type: select
     proxies:
