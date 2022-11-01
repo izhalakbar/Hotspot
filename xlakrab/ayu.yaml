@@ -1,0 +1,333 @@
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: false
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: true
+profile:
+  store-selected: true
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 8.8.8.8
+    - 1.0.0.1
+    - https://dns.google/dns-query
+  fallback:
+    - 1.1.1.1
+    - 8.8.4.4
+    - https://cloudflare-dns.com/dns-query
+    - 112.215.203.254
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 112.215.203.254
+BUG:
+  - &bug1 51.79.220.79
+  - &bug2 104.26.5.10
+  - &bug3 104.17.3.81
+  - &bug4 104.26.4.10
+SNI:
+  - &sni1 alt20.maps.gstatic.com
+  - &sni2 cdn.onlymega.com
+  - &sni3 roboguru.ruangguru.com
+  - &sni4 cacerts.digicert.com
+PATH:
+  - &path1 wss://alt20.maps.gstatic.com/howdy
+  - &path2 wss://cdn.onlymega.com/howdy
+  - &path3 wss://roboguru.ruangguru.com/howdy
+  - &path4 wss://cacerts.digicert.com/howdy
+#vless
+  - &path9 wss://cdn.onlymega.com/websocket
+  - &path10 wss://roboguru.ruangguru.com/websocket
+  - &path11 wss://cacerts.digicert.com/websocket
+  - &path12 wss://dev.appsflyer.com/websocket
+PW:
+#trojan
+  - &pw1 6c8b1e40-593f-11ed-bd51-1239d0255272
+  - &pw2 a4640be0-5949-11ed-a6e6-1239d0255272
+  - &pw3 b4d8ee70-593f-11ed-8632-1239d0255272
+  - &pw4 57f30420-59b1-11ed-b1bd-1239d0255272
+#vmess
+  - &pw5 319e3438-3dd8-4d69-80ab-31fb4f3d4c7c
+  - &pw6 cfe3d382-4ea2-4eee-aab4-6ff478065d36
+  - &pw7 319e3438-3dd8-4d69-80ab-31fb4f3d4c7c
+  - &pw8 319e3438-3dd8-4d69-80ab-31fb4f3d4c7c
+#vless
+  - &pw9 9b46298f-aaa0-4142-bd87-92c47fca4db3
+  - &pw10 02af031e-337e-44fc-b1c6-28bf26487db2
+  - &pw11 1de61ddf-1f28-42b0-b101-e2c5bcaeea79
+  - &pw12 cd93766d-acdd-4db1-ba26-e2ee131d82d1
+proxies:
+  #trojan
+  - name: AKUN-1|>
+    server: *bug1
+    port: 443
+    type: trojan
+    password: *pw1
+    skip-cert-verify: true
+    sni: *sni1
+    network: ws
+    ws-opts:
+      path: *path1
+      headers:
+        Host: sgovh-trojan.bonds.id
+    udp: true
+  - name: AKUN-2|>
+    server: *bug2
+    port: 443
+    type: trojan
+    password: *pw2
+    skip-cert-verify: true
+    sni: *sni2
+    network: ws
+    ws-opts:
+      path: *path2
+      headers:
+        Host: sgovh-trojan.bonds.id
+    udp: true
+  - name: AKUN-3|>
+    server: *bug3
+    port: 443
+    type: trojan
+    password: *pw3
+    skip-cert-verify: true
+    sni: *sni3
+    network: ws
+    ws-opts:
+      path: *path3
+      headers:
+        Host: sgovh-trojan.bonds.id
+    udp: true
+  - name: AKUN-4|>
+    server: *bug4
+    port: 443
+    type: trojan
+    password: *pw4
+    skip-cert-verify: true
+    sni: *sni4
+    network: ws
+    ws-opts:
+      path: *path4
+      headers:
+        Host: sgovh-trojan.bonds.id
+    udp: true
+  #vmess
+  - name: AKUN-5|>
+    server: v2ray1.udpgw.com
+    port: 443
+    type: vmess
+    uuid: *pw5
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni1
+    network: ws
+    ws-opts:
+      path: *path1
+      headers:
+        Host: v2ray1.udpgw.com
+    udp: true
+  - name: AKUN-6|>
+    server: *bug2
+    port: 443
+    type: vmess
+    uuid: *pw6
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni2
+    network: ws
+    ws-opts:
+      path: *path2
+      headers:
+        Host: v2ray1.udpgw.com
+    udp: true
+  - name: AKUN-7|>
+    server: *bug3
+    port: 443
+    type: vmess
+    uuid: *pw7
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni3
+    network: ws
+    ws-opts:
+      path: *path3
+      headers:
+        Host: v2ray1.udpgw.com
+    udp: true
+  - name: AKUN-8|>
+    server: *bug4
+    port: 443
+    type: vmess
+    uuid: *pw8
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni4
+    network: ws
+    ws-opts:
+      path: *path4
+      headers:
+        Host: v2ray1.udpgw.com
+    udp: true
+  #vless
+  - name: AKUN-9|>
+    server: *bug2
+    port: 443
+    type: vless
+    uuid: *pw9
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni2
+    network: ws
+    ws-opts:
+      path: *path9
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+  - name: AKUN-10|>
+    server: *bug3
+    port: 443
+    type: vless
+    uuid: *pw10
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni3
+    network: ws
+    ws-opts:
+      path: *path10
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+  - name: AKUN-11|>
+    server: *bug4
+    port: 443
+    type: vless
+    uuid: *pw11
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni4
+    network: ws
+    ws-opts:
+      path: *path11
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+  - name: AKUN-12|>
+    server: 104.26.5.10
+    port: 443
+    type: vless
+    uuid: *pw12
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: dev.appsflyer.com
+    network: ws
+    ws-opts:
+      path: *path12
+      headers:
+        Host: sgovh1-ws.xvless.xyz
+    udp: true
+proxy-groups:
+  - name: Universal
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Trojab-load-balance
+      - Vmess-load-balance
+      - Vless-load-balance
+  - name: Trojab-load-balance
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Trojab-url-test1
+      - Trojab-url-test2
+  - name: Vmess-load-balance
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Vmess-url-test1
+      - Vmess-url-test2
+  - name: Vless-load-balance
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Vless-url-test1
+      - Vless-url-test2
+  - name: Trojab-url-test1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - AKUN-1|>
+      - AKUN-2|>
+  - name: Trojab-url-test2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - AKUN-3|>
+      - AKUN-4|>
+  - name: Vmess-url-test1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - AKUN-5|>
+      - AKUN-6|>
+  - name: Vmess-url-test2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - AKUN-7|>
+      - AKUN-8|>
+  - name: Vless-url-test1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - AKUN-9|>
+      - AKUN-10|>
+  - name: Vless-url-test2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - AKUN-11|>
+      - AKUN-12|>
+rules:
+  - MATCH,Universal
