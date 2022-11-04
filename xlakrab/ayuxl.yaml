@@ -1,1 +1,372 @@
-zzss
+---
+dns:
+  nameserver:
+  - 192.168.8.1
+  - 192.168.9.1
+  - dhcp://"eth1"
+  - dhcp://"wwan0"
+  - https://dns.adguard.com/dns-query
+  - https://dns-google.com/dns-query
+  - tls://dns.adguard.com
+  - tls://dns-google.com/
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  fake-ip-range: 198.18.0.1/16
+  listen: 127.0.0.1:7874
+  fake-ip-filter:
+  - "+.*"
+  default-nameserver:
+  - 192.168.9.1
+  - 192.168.8.1
+redir-port: 7892
+tproxy-port: 7895
+port: 7890
+socks-port: 7891
+mixed-port: 7893
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: reyre
+bind-address: "*"
+external-ui: "/usr/share/openclash/ui"
+ipv6: false
+tun:
+  enable: true
+  stack: system
+  auto-route: false
+  auto-detect-interface: false
+  dns-hijack:
+  - tcp://8.8.8.8:53
+  - tcp://8.8.4.4:53
+profile:
+  store-selected: true
+  store-fake-ip: true
+#=========================================================
+BUG:
+  - &bug 104.26.4.10
+SNI:
+  - &sni cacerts.digicert.com
+PATH:
+  - &path ws://cacerts.digicert.com/howdy
+SERVER:
+ #trojan
+  - &howdy-tr sg-atha.bonds.id
+ #vmess
+  - &howdy-vm v2ray1.udpgw.com
+PASSWORD:
+ #trojan
+  - &tr1 545a16c0-5bac-11ed-b78f-1239d0255272
+  - &tr2 92d69ff0-5bac-11ed-b5ba-1239d0255272
+  - &tr3 a6099ec0-5bac-11ed-b3e1-1239d0255272
+  - &tr4 b97570b0-5bac-11ed-bc49-1239d0255272
+  - &tr5 cbca3b70-5bac-11ed-b512-1239d0255272
+  - &tr6 dd123bc0-5bac-11ed-9a0b-1239d0255272
+  - &tr7 efa9ba30-5bac-11ed-9085-1239d0255272
+  - &tr8 0147e6f0-5bad-11ed-aae5-1239d0255272
+ #vmess
+  - &vm1 ab381e7b-e114-44dc-9a76-7467205a8397
+  - &vm2 7f88eb50-e46b-4cd0-87fc-619febdec593
+  - &vm3 084f01cb-594a-4f93-9a3a-c68ed0b8b946
+  - &vm4 cfe3d382-4ea2-4eee-aab4-6ff478065d36
+#=========================================================
+proxies:
+ #trojan
+  - name: TROJAN-1|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr1
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-2|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr2
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-3|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr3
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-4|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr4
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-5|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr5
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-6|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr6
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-7|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr7
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-8|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr8
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+ #vmess
+  - name: VMESS-1|>
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *vm1
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-vm
+    udp: true
+  - name: VMESS-2|>
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *vm2
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-vm
+    udp: true
+  - name: VMESS-3|>
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *vm3
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-vm
+    udp: true
+  - name: VMESS-4|>
+    server: *bug
+    port: 443
+    type: vmess
+    uuid: *vm4
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-vm
+    udp: true
+#=>
+proxy-groups:
+  - name: Universal
+    type: select
+    proxies:
+      - All-load-balance
+    filter: "All-load-balance"
+  - name: All-load-balance
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Trojan-load-balance
+      - Vmess-load-balance
+ #parents
+  - name: Trojan-load-balance
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Trojan-url-test-1
+      - Trojan-url-test-2
+      - Trojan-url-test-3
+      - Trojan-url-test-4
+  - name: Vmess-load-balance
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    proxies:
+      - Vmess-url-test-1
+      - Vmess-url-test-2
+ #child
+  - name: Trojan-url-test-1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - TROJAN-1|>
+      - TROJAN-2|>
+  - name: Trojan-url-test-2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - TROJAN-3|>
+      - TROJAN-4|>
+  - name: Trojan-url-test-3
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - TROJAN-5|>
+      - TROJAN-6|>
+  - name: Trojan-url-test-4
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - TROJAN-7|>
+      - TROJAN-8|>
+  #=>
+  - name: Vmess-url-test-1
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - VMESS-1|>
+      - VMESS-2|>
+  - name: Vmess-url-test-2
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - VMESS-3|>
+      - VMESS-4|>
+  - name: Game
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - TROJAN-8|>
+      - VMESS-1|>
+#=========================================================
+rule-providers:
+  RP-Direct:
+    type: file
+    behavior: classical
+    path: "./rule_provider/tdirect.yaml"
+  RP-Reject:
+    type: file
+    behavior: classical
+    path: "./rule_provider/reject.yaml"
+  RP-Gaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/gaming.yaml"
+  RP-Sosmed:
+    type: file
+    behavior: classical
+    path: "./rule_provider/tsosmed.yaml"
+  RP-Streaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/streaming.yaml"
+rules:
+  - DST-PORT,7895,REJECT
+  - DST-PORT,7892,REJECT
+  - DST-PORT,7895,REJECT
+  - DST-PORT,7892,REJECT
+  - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+  - RULE-SET,RP-Direct,DIRECT
+  - RULE-SET,RP-Reject,REJECT
+  - RULE-SET,RP-Gaming,Game
+  - RULE-SET,RP-Sosmed,Universal
+  - RULE-SET,RP-Streaming,Vmess-load-balance
+  - MATCH,GLOBAL
+tcp-concurrent: true
+#oke
