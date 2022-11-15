@@ -1,5 +1,4 @@
 ---
-# ================= REYRE-STB ==================
 dns:
   nameserver:
   - 192.168.8.1
@@ -44,305 +43,330 @@ tun:
 profile:
   store-selected: true
   store-fake-ip: true
+#=========================================================
 BUG:
-  - &bug1 51.79.220.79
-  - &bug2 104.26.5.10
-  - &bug3 104.17.3.81
-  - &bug4 104.26.4.10
+  - &bug 104.26.4.10
 SNI:
-  - &sni1 alt20.maps.gstatic.com
-  - &sni2 cdn.onlymega.com
-  - &sni3 roboguru.ruangguru.com
-  - &sni4 cacerts.digicert.com
+  - &sni cacerts.digicert.com
 PATH:
-  - &path1 wss://alt20.maps.gstatic.com/howdy
-  - &path2 wss://cdn.onlymega.com/howdy
-  - &path3 wss://roboguru.ruangguru.com/howdy
-  - &path4 wss://cacerts.digicert.com/howdy
-#vless
-  - &path9 wss://cdn.onlymega.com/websocket
-  - &path10 wss://roboguru.ruangguru.com/websocket
-  - &path11 wss://cacerts.digicert.com/websocket
-  - &path12 wss://dev.appsflyer.com/websocket
-PW:
-#trojan
-  - &pw1 b6fd9c80-5a96-11ed-9ba6-1239d0255272
-  - &pw2 dc250060-5a96-11ed-bf74-1239d0255272
-  - &pw3 f4150d10-5a96-11ed-819a-1239d0255272
-  - &pw4 0db439d0-5a97-11ed-8959-1239d0255272
-#vmess
-  - &pw5 ab381e7b-e114-44dc-9a76-7467205a8397
-  - &pw6 7f88eb50-e46b-4cd0-87fc-619febdec593
-  - &pw7 084f01cb-594a-4f93-9a3a-c68ed0b8b946
-  - &pw8 cfe3d382-4ea2-4eee-aab4-6ff478065d36
-#vless
-  - &pw9 6d156cc9-af4c-434d-ac21-368c9a5d7ad6
-  - &pw10 92bf9172-4581-41e9-9352-36a9edeb9510
-  - &pw11 f7d43915-5b36-48ae-b8c7-82f600164910
-  - &pw12 c3571e93-9ee1-452f-97f3-6c7ab138650d
+  - &path ws://cacerts.digicert.com/howdy
+SERVER:
+ #trojan
+  - &howdy-tr sg-atha.bonds.id
+ #vmess
+  - &howdy-vm v2ray2.udpgw.com
+PASSWORD:
+ #trojan
+  - &tr1 4a5e9240-64c1-11ed-9787-1239d0255272
+  - &tr2 6d0da500-64c1-11ed-af45-1239d0255272
+  - &tr3 856fb3e0-64c1-11ed-948e-1239d0255272
+  - &tr4 ad75bcd0-64c1-11ed-ae31-1239d0255272
+  - &tr5 195553c0-64c2-11ed-bc6c-1239d0255272
+  - &tr6 905f8170-64c2-11ed-8f69-1239d0255272
+  - &tr7 b6640e30-64c2-11ed-8c91-1239d0255272
+  - &tr8 d87b0450-64c2-11ed-8f4e-1239d0255272
+ #vmess
+  - &vm1 03412975-16ea-43b9-8221-1537e03c1a4a
+  - &vm2 345a5efa-27ab-40a9-bf77-28cb76cd4f22
+  - &vm3 3099ee9b-5b87-427a-a68e-8bd691e79373
+  - &vm4 dc2b4e23-3da2-45ce-ae58-e650f2375a0b
+#=========================================================
 proxies:
-  #trojan
-  - name: AKUN-1|>
-    server: *bug1
+ #trojan
+  - name: TROJAN-1|>
+    server: *bug
     port: 443
     type: trojan
-    password: *pw1
+    password: *tr1
     skip-cert-verify: true
-    sni: *sni1
+    sni: *sni
     network: ws
     ws-opts:
-      path: *path1
+      path: *path
       headers:
-        Host: sg-atha.bonds.id
+        Host: *howdy-tr
     udp: true
-  - name: AKUN-2|>
-    server: *bug2
+  - name: TROJAN-2|>
+    server: *bug
     port: 443
     type: trojan
-    password: *pw2
+    password: *tr2
     skip-cert-verify: true
-    sni: *sni2
+    sni: *sni
     network: ws
     ws-opts:
-      path: *path2
+      path: *path
       headers:
-        Host: sg-atha.bonds.id
+        Host: *howdy-tr
     udp: true
-  - name: AKUN-3|>
-    server: *bug3
+  - name: TROJAN-3|>
+    server: *bug
     port: 443
     type: trojan
-    password: *pw3
+    password: *tr3
     skip-cert-verify: true
-    sni: *sni3
+    sni: *sni
     network: ws
     ws-opts:
-      path: *path3
+      path: *path
       headers:
-        Host: sg-atha.bonds.id
+        Host: *howdy-tr
     udp: true
-  - name: AKUN-4|>
-    server: *bug4
+  - name: TROJAN-4|>
+    server: *bug
     port: 443
     type: trojan
-    password: *pw4
+    password: *tr4
     skip-cert-verify: true
-    sni: *sni4
+    sni: *sni
     network: ws
     ws-opts:
-      path: *path4
+      path: *path
       headers:
-        Host: sg-atha.bonds.id
+        Host: *howdy-tr
     udp: true
-  #vmess
-  - name: AKUN-5|>
-    server: v2ray1.udpgw.com
+  - name: TROJAN-5|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr5
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-6|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr6
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-7|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr7
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+  - name: TROJAN-8|>
+    server: *bug
+    port: 443
+    type: trojan
+    password: *tr8
+    skip-cert-verify: true
+    sni: *sni
+    network: ws
+    ws-opts:
+      path: *path
+      headers:
+        Host: *howdy-tr
+    udp: true
+ #vmess
+  - name: VMESS-1|>
+    server: *bug
     port: 443
     type: vmess
-    uuid: *pw5
+    uuid: *vm1
     alterId: 0
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni1
+    servername: *sni
     network: ws
     ws-opts:
-      path: *path1
+      path: *path
       headers:
-        Host: v2ray1.udpgw.com
+        Host: *howdy-vm
     udp: true
-  - name: AKUN-6|>
-    server: *bug2
+  - name: VMESS-2|>
+    server: *bug
     port: 443
     type: vmess
-    uuid: *pw6
+    uuid: *vm2
     alterId: 0
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni2
+    servername: *sni
     network: ws
     ws-opts:
-      path: *path2
+      path: *path
       headers:
-        Host: v2ray1.udpgw.com
+        Host: *howdy-vm
     udp: true
-  - name: AKUN-7|>
-    server: *bug3
+  - name: VMESS-3|>
+    server: *bug
     port: 443
     type: vmess
-    uuid: *pw7
+    uuid: *vm3
     alterId: 0
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni3
+    servername: *sni
     network: ws
     ws-opts:
-      path: *path3
+      path: *path
       headers:
-        Host: v2ray1.udpgw.com
+        Host: *howdy-vm
     udp: true
-  - name: AKUN-8|>
-    server: *bug4
+  - name: VMESS-4|>
+    server: *bug
     port: 443
     type: vmess
-    uuid: *pw8
+    uuid: *vm4
     alterId: 0
     cipher: auto
     tls: true
     skip-cert-verify: true
-    servername: *sni4
+    servername: *sni
     network: ws
     ws-opts:
-      path: *path4
+      path: *path
       headers:
-        Host: v2ray1.udpgw.com
+        Host: *howdy-vm
     udp: true
-  #vless
-  - name: AKUN-9|>
-    server: *bug2
-    port: 443
-    type: vless
-    uuid: *pw9
-    cipher: auto
-    tls: true
-    skip-cert-verify: true
-    servername: *sni2
-    network: ws
-    ws-opts:
-      path: *path9
-      headers:
-        Host: sgovh1-ws.xvless.xyz
-    udp: true
-  - name: AKUN-10|>
-    server: *bug3
-    port: 443
-    type: vless
-    uuid: *pw10
-    cipher: auto
-    tls: true
-    skip-cert-verify: true
-    servername: *sni3
-    network: ws
-    ws-opts:
-      path: *path10
-      headers:
-        Host: sgovh1-ws.xvless.xyz
-    udp: true
-  - name: AKUN-11|>
-    server: *bug4
-    port: 443
-    type: vless
-    uuid: *pw11
-    cipher: auto
-    tls: true
-    skip-cert-verify: true
-    servername: *sni4
-    network: ws
-    ws-opts:
-      path: *path11
-      headers:
-        Host: sgovh1-ws.xvless.xyz
-    udp: true
-  - name: AKUN-12|>
-    server: 104.26.5.10
-    port: 443
-    type: vless
-    uuid: *pw12
-    cipher: auto
-    tls: true
-    skip-cert-verify: true
-    servername: dev.appsflyer.com
-    network: ws
-    ws-opts:
-      path: *path12
-      headers:
-        Host: sgovh1-ws.xvless.xyz
-    udp: true
+#=>
 proxy-groups:
   - name: Universal
+    type: select
+    proxies:
+      - All-load-balance
+    filter: "All-load-balance"
+  - name: All-load-balance
     type: load-balance
     strategy: consistent-hashing
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     proxies:
-      - Trojab-load-balance
+      - Trojan-load-balance
       - Vmess-load-balance
-      - Vless-load-balance
-  - name: Trojab-load-balance
+ #parents
+  - name: Trojan-load-balance
     type: load-balance
     strategy: consistent-hashing
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     proxies:
-      - Trojab-url-test1
-      - Trojab-url-test2
+      - Trojan-url-test-1
+      - Trojan-url-test-2
+      - Trojan-url-test-3
+      - Trojan-url-test-4
   - name: Vmess-load-balance
     type: load-balance
     strategy: consistent-hashing
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     proxies:
-      - Vmess-url-test1
-      - Vmess-url-test2
-  - name: Vless-load-balance
-    type: load-balance
-    strategy: consistent-hashing
-    url: http://cp.cloudflare.com/generate_204
-    interval: 150
-    proxies:
-      - Vless-url-test1
-      - Vless-url-test2
-  - name: Trojab-url-test1
+      - Vmess-url-test-1
+      - Vmess-url-test-2
+ #child
+  - name: Trojan-url-test-1
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     tolerance: 50
     proxies:
-      - AKUN-1|>
-      - AKUN-2|>
-  - name: Trojab-url-test2
+      - TROJAN-1|>
+      - TROJAN-2|>
+  - name: Trojan-url-test-2
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     tolerance: 50
     proxies:
-      - AKUN-3|>
-      - AKUN-4|>
-  - name: Vmess-url-test1
+      - TROJAN-3|>
+      - TROJAN-4|>
+  - name: Trojan-url-test-3
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     tolerance: 50
     proxies:
-      - AKUN-5|>
-      - AKUN-6|>
-  - name: Vmess-url-test2
+      - TROJAN-5|>
+      - TROJAN-6|>
+  - name: Trojan-url-test-4
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     tolerance: 50
     proxies:
-      - AKUN-7|>
-      - AKUN-8|>
-  - name: Vless-url-test1
+      - TROJAN-7|>
+      - TROJAN-8|>
+  #=>
+  - name: Vmess-url-test-1
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     tolerance: 50
     proxies:
-      - AKUN-9|>
-      - AKUN-10|>
-  - name: Vless-url-test2
+      - VMESS-1|>
+      - VMESS-2|>
+  - name: Vmess-url-test-2
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 150
     tolerance: 50
     proxies:
-      - AKUN-11|>
-      - AKUN-12|>
+      - VMESS-3|>
+      - VMESS-4|>
+  - name: Game
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 150
+    tolerance: 50
+    proxies:
+      - TROJAN-8|>
+      - VMESS-1|>
+#=========================================================
+rule-providers:
+  RP-Direct:
+    type: file
+    behavior: classical
+    path: "./rule_provider/tdirect.yaml"
+  RP-Reject:
+    type: file
+    behavior: classical
+    path: "./rule_provider/reject.yaml"
+  RP-Gaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/gaming.yaml"
+  RP-Sosmed:
+    type: file
+    behavior: classical
+    path: "./rule_provider/tsosmed.yaml"
+  RP-Streaming:
+    type: file
+    behavior: classical
+    path: "./rule_provider/streaming.yaml"
 rules:
-- MATCH,GLOBAL
+  - DST-PORT,7895,REJECT
+  - DST-PORT,7892,REJECT
+  - DST-PORT,7895,REJECT
+  - DST-PORT,7892,REJECT
+  - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+  - RULE-SET,RP-Direct,DIRECT
+  - RULE-SET,RP-Reject,REJECT
+  - RULE-SET,RP-Gaming,Game
+  - RULE-SET,RP-Sosmed,Universal
+  - RULE-SET,RP-Streaming,Vmess-load-balance
+  - MATCH,GLOBAL
 tcp-concurrent: true
 #oke
