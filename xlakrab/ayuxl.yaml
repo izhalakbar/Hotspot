@@ -54,22 +54,22 @@ SERVER:
  #trojan
   - &howdy-tr sg-atha.bonds.id
  #vmess
-  - &howdy-vm v2ray1.udpgw.com
+  - &howdy-vm v2ray2.udpgw.com
 PASSWORD:
  #trojan
-  - &tr1 545a16c0-5bac-11ed-b78f-1239d0255272
-  - &tr2 92d69ff0-5bac-11ed-b5ba-1239d0255272
-  - &tr3 a6099ec0-5bac-11ed-b3e1-1239d0255272
-  - &tr4 b97570b0-5bac-11ed-bc49-1239d0255272
-  - &tr5 cbca3b70-5bac-11ed-b512-1239d0255272
-  - &tr6 dd123bc0-5bac-11ed-9a0b-1239d0255272
-  - &tr7 efa9ba30-5bac-11ed-9085-1239d0255272
-  - &tr8 0147e6f0-5bad-11ed-aae5-1239d0255272
+  - &tr1 bb90c9e0-64c3-11ed-891b-1239d0255272
+  - &tr2 db514d40-64c3-11ed-b2fd-1239d0255272
+  - &tr3 0c3995e0-64c4-11ed-885a-1239d0255272
+  - &tr4 4f5e48a0-64c4-11ed-b0bd-1239d0255272
+  - &tr5 71cf0c60-64c6-11ed-bd03-1239d0255272
+  - &tr6 961bfa60-64c6-11ed-8379-1239d0255272
+  - &tr7 bc2c4540-64c6-11ed-8ca2-1239d0255272
+  - &tr8 e88ef9e0-64c6-11ed-954b-1239d0255272
  #vmess
-  - &vm1 ab381e7b-e114-44dc-9a76-7467205a8397
-  - &vm2 7f88eb50-e46b-4cd0-87fc-619febdec593
-  - &vm3 084f01cb-594a-4f93-9a3a-c68ed0b8b946
-  - &vm4 cfe3d382-4ea2-4eee-aab4-6ff478065d36
+  - &vm1 03412975-16ea-43b9-8221-1537e03c1a4a
+  - &vm2 345a5efa-27ab-40a9-bf77-28cb76cd4f22
+  - &vm3 3099ee9b-5b87-427a-a68e-8bd691e79373
+  - &vm4 dc2b4e23-3da2-45ce-ae58-e650f2375a0b
 #=========================================================
 proxies:
  #trojan
